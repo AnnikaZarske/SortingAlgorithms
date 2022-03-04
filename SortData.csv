@@ -1,0 +1,17 @@
+BubbleSort,Random,10,6.248549,25
+BubbleSort,Random,13,11.99664,44
+BubbleSort,Random,10,6.249924,24
+BubbleSort,Random,15,15.41407,59
+BubbleSort,Random,15,15.42697,33
+BubbleSortOptimised,Random,15,10.1791,61
+EvenOddSort,Random,15,8.370636,40
+CocktailShakerSort,Random,15,10.78332,65
+InsertionSort,Random,15,6.756386,68
+BubbleSort,Random,10,8.962601,27
+BubbleSortOptimised,Random,10,4.131163,18
+EvenOddSort,Random,10,4.429184,25
+CocktailShakerSort,Random,10,3.124165,12
+CocktailShakerSort,Random,10,3.119724,15
+CocktailShakerSort,Random,20,18.24614,110
+InsertionSort,Random,20,8.459732,85
+BubbleSort,Random,17,22.46774,80
