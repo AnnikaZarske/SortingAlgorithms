@@ -27,9 +27,7 @@ public class Target : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector2 remVelocity = Vector2.zero;
     
-    private int bounceCounter = 0;
     private const float offset = 0.3f;
-    private int bounceActive = 0;
 
     public void ResetPosition()
     {
@@ -62,8 +60,6 @@ public class Target : MonoBehaviour
         bool bounceFlag = InBounceArea();
         if (bounceFlag)
         {
-            bounceCounter++;
-
             DoBouncing(ref bounceFlag);
 
             //velocity = AddNoise(velocity);
