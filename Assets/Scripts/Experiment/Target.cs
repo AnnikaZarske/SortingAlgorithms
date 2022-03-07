@@ -5,13 +5,13 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class Target : Node
+public class Target : MonoBehaviour
 {
-    public float speed = 250;
-    public float speedMin = 100;
-    public float speedMax = 2500;
+    public float speed = 2;
 
     private bool flying = true;
 
@@ -28,12 +28,12 @@ public class Target : Node
     private Vector2 remVelocity = Vector2.zero;
     
     private int bounceCounter = 0;
-    private const int offset = 30;
+    private const float offset = 0.3f;
     private int bounceActive = 0;
 
     public void ResetPosition()
     {
-        this.transform.position = new Vector3(300, 300);
+        this.transform.position = new Vector3(0, 0);
         remVelocity = Get45Direction();
         velocity = Vector3.zero;
         flying = false;
@@ -43,15 +43,21 @@ public class Target : Node
     void Start()
     {
         random = RandomNumberGenerator.Create();
-        screenSize = Camera.main.rect.size;
+        Camera cam = Camera.main;
+        float height = 2f * cam.orthographicSize;
+        float width = height * cam.aspect;
+        
+        screenSize = new Vector2(width, height);
 
-        this.transform.position = GetRandomPositon();
+        Vector2 rndPos = GetRandomPosition();
+        Debug.Log(rndPos);
+        this.transform.position = rndPos;
 
         velocity = GetRandomDirection();
     }
 
     // Update is called once per frame
-    void Update(float delta)
+    void Update()
     {
         bool bounceFlag = InBounceArea();
         if (bounceFlag)
@@ -60,17 +66,17 @@ public class Target : Node
 
             DoBouncing(ref bounceFlag);
 
-            velocity = AddNoise(velocity);
+            //velocity = AddNoise(velocity);
         }
 
-        transform.position += velocity * delta * speed;
+        transform.position += velocity * Time.deltaTime * speed;
     }
 
     private void DoBouncing(ref bool bFlag)
     {
         GetBounds(out Vector2 p1, out Vector2 p2);
 
-        if (transform.position.y < p1.y)
+        if (transform.position.y > p1.y)
         {
             velocity.y = -velocity.y;
             transform.position = new Vector2(transform.position.x, p1.y);
@@ -79,10 +85,10 @@ public class Target : Node
         if (transform.position.x > p2.x)
         {
             velocity.x = -velocity.x;
-            transform.position = new Vector2(p2.x,transform.position.y);
+            transform.position = new Vector2(p2.x, transform.position.y);
             bFlag = false;
         }
-        if (transform.position.y > p2.y)
+        if (transform.position.y < p2.y)
         {
             velocity.y = -velocity.y;
             transform.position = new Vector2(transform.position.x, p2.y);
@@ -91,7 +97,7 @@ public class Target : Node
         if (transform.position.x < p1.x)
         {
             velocity.x = -velocity.x;
-            transform.position = new Vector2(p1.x,transform.position.y);
+            transform.position = new Vector2(p1.x, transform.position.y);
             bFlag = false;
         }
     }
@@ -111,27 +117,27 @@ public class Target : Node
     
     private bool InBounceArea()
     {
+        bool bFlag = false;
+        
         GetBounds(out Vector2 p1, out Vector2 p2);
-
-        bool bflag = false;
-
-        if (transform.position.y < p1.y){}
-            bflag = true;
+        
+        if (transform.position.y > p1.y)
+            bFlag = true;
         if (transform.position.x > p2.x)
-            bflag = true;
-        if (transform.position.y > p2.y)
-            bflag = true;
-        if (transform.position.y < p1.y)
-            bflag = true;
+            bFlag = true;
+        if (transform.position.y < p2.y)
+            bFlag = true;
+        if (transform.position.x < p1.x)
+            bFlag = true;
 
-        return bflag;
+        return bFlag;
     }
 
     private Vector2 AddNoise(Vector2 v)
     {
-        float angle = v.Angle(Vector2.right, v);
+        float angle = Vector2.Angle(Vector2.right, v);
 
-        float rnd = Random.Range(-Mathf.PI / 32, Mathf.PI / 32);
+        float rnd = Random.Range(-Mathf.PI / 128, Mathf.PI / 128);
         angle += rnd;
         
         Vector2 result = Vector2.zero;
@@ -141,10 +147,10 @@ public class Target : Node
         return result.normalized;
     }
     
-    private Vector2 GetRandomPositon()
+    private Vector2 GetRandomPosition()
     {
-        GetBounds(out Vector2 p1, out Vector2 p2, 200);
-        
+        GetBounds(out Vector2 p1, out Vector2 p2, offset);
+
         Vector2 rndPos = Vector2.zero;
         rndPos.x = Random.Range(p1.x, p2.x);
         rndPos.y = Random.Range(p1.y, p2.y);
@@ -157,8 +163,7 @@ public class Target : Node
         int rnd = Random.Range(0, 3);
 
         float angle = (rnd * Mathf.PI / 2) + Mathf.PI / 4;
-
-
+        
         Vector2 delta = Vector2.zero;
         delta.x = Mathf.Cos(angle);
         delta.y = Mathf.Sin(angle);
@@ -177,9 +182,9 @@ public class Target : Node
         return delta.normalized;
     }
 
-    private void GetBounds(out Vector2 p1, out Vector2 p2, int off = offset)
+    private void GetBounds(out Vector2 p1, out Vector2 p2, float off = offset)
     {
-        p1 = new Vector2(off, off);
-        p2 = new Vector2(screenSize.x - off, screenSize.y - off);
+        p1 = new Vector2(-screenSize.x / 2 + off, screenSize.y / 2 - off);
+        p2 = new Vector2(screenSize.x / 2 - off, -screenSize.y / 2 + off);
     }
 }
