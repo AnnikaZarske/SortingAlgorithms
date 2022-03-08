@@ -4,10 +4,11 @@ using System.Linq;
 using UnityEngine;
 
 // see: https://www.geeksforgeeks.org/sorting-algorithms/
-public enum Algorithms {BubbleSort, CocktailSort, InsertionSort, ShellSort, BucketSort, QuickSort, QuickSortIterative}
 
 namespace Sorting
 {
+	public enum Algorithms {BubbleSort, CocktailSort, InsertionSort, ShellSort, BucketSort, QuickSort, QuickSortIterative}
+	
 	public class SortHelper
 	{
 		private Algorithms _currentAlgo;

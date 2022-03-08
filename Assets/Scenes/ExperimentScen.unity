@@ -562,9 +562,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b0a138ff10de7448ac4a251a6212e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrf: {fileID: 7469292241878515452, guid: 74e3aac922bf4d646a34ef3d242284b2, type: 3}
   ballsCount: 250
   closestBallsCount: 10
+  algoDropdown: 0
+  ballPrf: {fileID: 7469292241878515452, guid: 74e3aac922bf4d646a34ef3d242284b2, type: 3}
   whiteBallSprite: {fileID: 21300000, guid: f273649d1a952694fa574ca65f4539b4, type: 3}
   target: {fileID: 1371337068}
 --- !u!4 &1317200690

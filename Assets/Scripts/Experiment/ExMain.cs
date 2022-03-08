@@ -37,8 +37,6 @@ public class ExMain : MonoBehaviour
 
             ballList.Add(ball);
         }
-
-        //Instantiate(target);
     }
 
     // Update is called once per frame
