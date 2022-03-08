@@ -12,16 +12,18 @@ public class ExMain : MonoBehaviour
     {
         get { return sortTime; }
     }
-
-    public Ball ballPrf;
+    
+    [Header("Settings")]
     public int ballsCount = 250;
     public int closestBallsCount = 10;
+    public Algorithms algoDropdown;
+    
+    [Header("Attached")]
+    public Ball ballPrf;
     public Sprite whiteBallSprite;
-
     public Target target;
-
+    
     private List<Ball> ballList = new List<Ball>();
-
     private Ball[] ballArray;
     
     // Start is called before the first frame update
@@ -50,7 +52,7 @@ public class ExMain : MonoBehaviour
         ballArray = ballList.ToArray();
         
         SortHelper sh = new SortHelper();
-        sh.SetAlgorithm(Algorithms.QuickSort);
+        sh.SetAlgorithm(algoDropdown);
         sh.sort(ballArray);
         
 
