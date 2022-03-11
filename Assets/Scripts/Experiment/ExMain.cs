@@ -67,6 +67,7 @@ public class ExMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (running)
         {
             foreach (Ball ball in ballList)
@@ -77,7 +78,6 @@ public class ExMain : MonoBehaviour
             ballArray = ballList.ToArray();
         
             sw.Restart();
-            
             
             SortHelper sh = new SortHelper();
             sh.SetAlgorithm(algoDropdown);
@@ -99,7 +99,7 @@ public class ExMain : MonoBehaviour
             {
                 ballArray[i].GetComponent<SpriteRenderer>().sprite = whiteBallSprite;
             }
-
+            
             if (currentIteration > iterationsMax)
             {
                 running = false;
