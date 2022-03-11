@@ -25,9 +25,11 @@ public class ExMain : MonoBehaviour
     
     [Header("Attached")]
     public Ball ballPrf;
+    public GameObject balls;
     public Sprite whiteBallSprite;
     public Target target;
     public GameObject startButton;
+    public GameObject stopButton;
     public TMP_Text timeText;
     public TMP_Text iterationsText;
     
@@ -42,11 +44,11 @@ public class ExMain : MonoBehaviour
     // Start is called before the first frame update
     public void StartButton()
     {
+        currentExecutionTime = 0;
+        avarageExecutionTime = 0;
         currentIteration = 0;
         running = true;
-        
-        GameObject balls = GameObject.FindGameObjectWithTag("Balls");
-        
+
         for (int i = 0; i < ballsCount; i++)
         {
             Ball ball = Instantiate(ballPrf, balls.transform, true);
@@ -55,13 +57,12 @@ public class ExMain : MonoBehaviour
         }
 
         startButton.SetActive(false);
+        stopButton.SetActive(true);
     }
 
     public void StopButton()
     {
-        //delete ball children under Balls in hierarcy
-        //empty ball list
-        //Reset itterations
+        Reset();
     }
 
     // Update is called once per frame
@@ -102,8 +103,9 @@ public class ExMain : MonoBehaviour
             
             if (currentIteration > iterationsMax)
             {
-                running = false;
+                
                 printToFile = true;
+                Reset();
             }
         }
 
@@ -111,6 +113,23 @@ public class ExMain : MonoBehaviour
         {
             AddRecord(algoDropdown.ToString(), iterationsMax, ballsCount, avarageExecutionTime, algoDropdown.ToString() + "Data.csv");
             printToFile = false;
+        }
+    }
+
+    private void Reset()
+    {
+        running = false;
+        stopButton.SetActive(false);
+        startButton.SetActive(true);
+        ballList.Clear();
+        for (int i = 0; i < ballArray.Length; i++)
+        {
+            ballArray[i] = null;
+        }
+
+        foreach (Transform childBall in balls.transform)
+        {
+            GameObject.Destroy(childBall.gameObject);
         }
     }
     
