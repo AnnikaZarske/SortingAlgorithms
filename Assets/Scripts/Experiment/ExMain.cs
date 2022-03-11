@@ -9,13 +9,6 @@ using UnityEngine;
 
 public class ExMain : MonoBehaviour
 {
-    private float sortTime = 0;
-
-    public float SortTime
-    {
-        get { return sortTime; }
-    }
-    
     [Header("Settings")]
     public int ballsCount = 250;
     public int closestBallsCount = 10;
@@ -40,8 +33,7 @@ public class ExMain : MonoBehaviour
     private bool running = false;
     private bool printToFile = false;
     private Stopwatch sw = new Stopwatch();
-    
-    // Start is called before the first frame update
+
     public void StartButton()
     {
         currentExecutionTime = 0;
@@ -65,7 +57,6 @@ public class ExMain : MonoBehaviour
         Reset();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -84,7 +75,7 @@ public class ExMain : MonoBehaviour
             sh.SetAlgorithm(algoDropdown);
             sh.sort(ballArray);
             currentIteration++;
-            iterationsText.text = currentIteration.ToString("0000");
+            iterationsText.text = currentIteration.ToString("00000");
             
             sw.Stop();
         
@@ -141,7 +132,6 @@ public class ExMain : MonoBehaviour
             avarageExecutionTime = avarageExecutionTime + (currentExecutionTime - avarageExecutionTime) / (i);
         }
         timeText.text = avarageExecutionTime.ToString("0.0000000");
-        //distanceText.text = avarageShortestPath.ToString("0000.00");
     }
     
     private void AddRecord(string algoType, int iterations, int ballAmount, double time, string filepath)
