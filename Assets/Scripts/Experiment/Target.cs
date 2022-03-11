@@ -48,7 +48,7 @@ public class Target : MonoBehaviour
         screenSize = new Vector2(width, height);
 
         Vector2 rndPos = GetRandomPosition();
-        Debug.Log(rndPos);
+        //Debug.Log(rndPos);
         this.transform.position = rndPos;
 
         velocity = GetRandomDirection();
