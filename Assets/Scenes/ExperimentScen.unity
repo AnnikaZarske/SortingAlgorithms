@@ -1238,8 +1238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballsCount: 250
   closestBallsCount: 10
-  iterationsMax: 1000
-  algoDropdown: 0
+  iterationsMax: 5000
+  algoDropdown: 5
   fileOverrideToggle: 0
   ballPrf: {fileID: 7469292241878515452, guid: 74e3aac922bf4d646a34ef3d242284b2, type: 3}
   balls: {fileID: 1017786789}
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.0000000
+  m_text: 0.00000 ms
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

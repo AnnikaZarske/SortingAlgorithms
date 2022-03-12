@@ -33,13 +33,16 @@ public class ExMain : MonoBehaviour
     private bool running = false;
     private bool printToFile = false;
     private Stopwatch sw = new Stopwatch();
+    private FastMovingAverageDouble timeAverage;
+    private SortHelper sh;
 
     public void StartButton()
     {
         currentExecutionTime = 0;
-        avarageExecutionTime = 0;
+        //avarageExecutionTime = 0;
         currentIteration = 0;
         running = true;
+        sh = new SortHelper();
 
         for (int i = 0; i < ballsCount; i++)
         {
@@ -47,6 +50,8 @@ public class ExMain : MonoBehaviour
 
             ballList.Add(ball);
         }
+
+        timeAverage = new FastMovingAverageDouble(iterationsMax);
 
         startButton.SetActive(false);
         stopButton.SetActive(true);
@@ -71,16 +76,18 @@ public class ExMain : MonoBehaviour
         
             sw.Restart();
             
-            SortHelper sh = new SortHelper();
             sh.SetAlgorithm(algoDropdown);
             sh.sort(ballArray);
+            
+            sw.Stop();
+            
             currentIteration++;
             iterationsText.text = currentIteration.ToString("00000");
             
-            sw.Stop();
-        
             currentExecutionTime = sw.Elapsed.TotalSeconds;
-            CalcAverage(currentIteration);
+            timeAverage.AddValue(currentExecutionTime);
+            timeText.text = (timeAverage.MovingAverage * 1000).ToString("0.00000 ms");
+            //CalcAverage(currentIteration);
 
             for (int i = closestBallsCount - 1; i < ballArray.Length; i++)
             {
@@ -129,9 +136,9 @@ public class ExMain : MonoBehaviour
         if (i == 1) {
             avarageExecutionTime = currentExecutionTime;
         } else {
-            avarageExecutionTime = avarageExecutionTime + (currentExecutionTime - avarageExecutionTime) / (i);
+            avarageExecutionTime = avarageExecutionTime + (currentExecutionTime - avarageExecutionTime) / i;
         }
-        timeText.text = avarageExecutionTime.ToString("0.0000000");
+        timeText.text = (avarageExecutionTime * 1000).ToString("0.00000 ms");
     }
     
     private void AddRecord(string algoType, int iterations, int ballAmount, double time, string filepath)
