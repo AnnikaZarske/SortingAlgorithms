@@ -15,3 +15,7 @@ CocktailShakerSort,Random,10,3.119724,15
 CocktailShakerSort,Random,20,18.24614,110
 InsertionSort,Random,20,8.459732,85
 BubbleSort,Random,17,22.46774,80
+BubbleSort,Random,10,5.405296,20
+EvenOddSort,Random,13,8.492098,35
+CocktailShakerSort,Random,13,7.296181,32
+InsertionSort,Random,17,10.11659,100
